@@ -1,0 +1,27 @@
+name: Running API tests for Github
+
+on: push
+
+jobs:
+  super-lint:
+    name: Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Cache multiple paths
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/cache
+            !~/cache/exclude
+            **/node_modules
+          key: ${{ runner.os }}-${{ hashFiles('**/lockfiles') }}
+
+      - name: Install NPM dependencies
+        run: npm install --only=dev
+
+      - name: Testing
+        run: npm test

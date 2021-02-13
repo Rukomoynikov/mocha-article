@@ -1,0 +1,15 @@
+image: node:alpine3.10
+
+before_script:
+  - npm install
+
+stages:
+  - running tests
+
+Running tests:
+  stage: running tests
+  script:
+    - npm test
+  cache:
+    paths:
+      - node_modules/
